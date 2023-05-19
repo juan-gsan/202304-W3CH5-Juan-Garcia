@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+}
