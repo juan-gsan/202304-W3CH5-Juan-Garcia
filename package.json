@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "jest --watchAll --coverage",
     "test:prod": "jest --watchAll --coverage --watchAll=false",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "json-server --watch db.json"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.21.5",
@@ -45,5 +46,8 @@
         ]
       }
     }
+  },
+  "dependencies": {
+    "json-server": "^0.17.3"
   }
 }
