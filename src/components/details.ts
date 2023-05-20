@@ -9,14 +9,10 @@ export class Details extends Component {
     super(selector);
     this.pokemon = [];
     this.repository = new ApiPokemon();
-    this.handleLoadEach(url);
+    this.handleLoadEach();
   }
 
-  async handleLoadEach(url: string) {
-    this.pokemon = this.repository.getEach(url);
-    this.template = await this.createTemplate();
-    this.render();
-  }
+  async handleLoadEach() {}
 
   async createTemplate() {
     const list = this.pokemon

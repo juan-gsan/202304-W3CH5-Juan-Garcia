@@ -9,26 +9,28 @@ export class Card extends Component {
     super(selector);
     this.pokemon = [];
     this.repository = new ApiPokemon();
-    console.log(this.repository);
-    this.handleLoadAll();
+    this.handleLoadEach();
   }
 
-  async handleLoadAll() {
-    this.pokemon = await this.repository.getAll();
+  async handleLoadEach() {
+    this.pokemon = await this.repository.getEach();
+    console.log(this.repository);
+    console.log(this.pokemon);
+    this.template = await this.createTemplate();
     this.render();
   }
 
   createTemplate() {
-    const list = this.pokemon.results
+    const list = this.pokemon
       .map(
         (item) => `
           <li>
             <p class="name">${item.name.toUpperCase()}</p>
             <a href="${
               item.url
-            }"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/9.gif" alt="${
-          item.name
-        }-picture" width=110 height=100></a>
+            }"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
+          item.url.split('/')[6]
+        }.gif" alt="${item.name}-picture" width=100 height=100></a>
           </li>`
       )
       .join('');

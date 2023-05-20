@@ -10,27 +10,23 @@ export class ApiPokemon {
     // This.picture = '';
   }
 
-  getAll() {
-    fetch(this.pokeUrl)
-      .then((response) => response.json())
-      .then((pokeList) => pokeList);
+  async getAll() {
+    const response = await fetch(this.pokeUrl);
+    const pokeList = await response.json();
+    return pokeList.results;
   }
 
-  getEach() {
-    fetch(this.pokeUrl)
-      .then((response) => response.json())
-      .then((pokeList) => {
-        console.log(pokeList);
-        pokeList.results.forEach((pokemon) => {
-          const eachUrl = pokemon.url;
-          console.log(eachUrl);
-          fetch(eachUrl)
-            .then((response) => response.json())
-            .then((pokeInfo) => {
-              console.log(pokeInfo);
-            });
-        });
-      });
+  async getEach() {
+    const response = await fetch(this.pokeUrl);
+    const pokeList = await response.json();
+    const pokeDataContainer = [];
+    pokeList.results.forEach(async (pokemon) => {
+      const eachUrl = pokemon.url;
+      const response = await fetch(eachUrl);
+      const pokeData = await response.json();
+      return pokeDataContainer.push(pokeData);
+    });
+    return pokeDataContainer;
   }
 
   // FetchPokemonData(pokemon) {
