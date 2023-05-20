@@ -1,9 +1,9 @@
 {
-  "posts": [
+  "pokemon": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "title": "",
+      "author": ""
     }
   ],
   "comments": [

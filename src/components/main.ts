@@ -8,6 +8,6 @@ export class Main extends Component {
   }
 
   createTemplate() {
-    return `<main class="main-container"></main>`;
+    return `<main class="main"></main>`;
   }
 }

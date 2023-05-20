@@ -7,7 +7,7 @@ export abstract class Component {
   constructor(public selector: string) {}
 
   render(position: InsertPosition = 'beforeend') {
-    const parentElement = document.querySelector('#app');
+    const parentElement = document.querySelector(this.selector);
     if (!parentElement) throw new Error('Invalid selector');
     parentElement.insertAdjacentHTML(position, this.template);
     this.element = parentElement.lastElementChild!;
