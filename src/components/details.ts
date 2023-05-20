@@ -1,25 +1,25 @@
-import { Component } from './component';
-import { Pokemon } from '../model/pokemon';
 import { ApiPokemon } from '../data/api.pokemon';
+import { Pokemon, PokemonData } from '../model/pokemon';
+import { Component } from './component';
 
-export class Card extends Component {
+export class Details extends Component {
   pokemon!: Pokemon[];
   repository: ApiPokemon;
   constructor(selector: string) {
     super(selector);
     this.pokemon = [];
     this.repository = new ApiPokemon();
-    console.log(this.repository);
-    this.handleLoadAll();
+    this.handleLoadEach(url);
   }
 
-  async handleLoadAll() {
-    this.pokemon = await this.repository.getAll();
+  async handleLoadEach(url: string) {
+    this.pokemon = this.repository.getEach(url);
+    this.template = await this.createTemplate();
     this.render();
   }
 
-  createTemplate() {
-    const list = this.pokemon.results
+  async createTemplate() {
+    const list = this.pokemon
       .map(
         (item) => `
           <li>

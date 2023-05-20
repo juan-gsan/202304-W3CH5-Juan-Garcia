@@ -5,44 +5,75 @@ export class ApiPokemon {
   pokeUrl: string;
   serverUrl: string;
   constructor() {
-    // This.id = generateId();
-    this.pokeUrl = 'https://pokeapi.co/api/v2/pokemon/';
+    this.pokeUrl = 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0';
     this.serverUrl = 'http://localhost:3000/pokemon';
     // This.picture = '';
   }
 
-  async getAll() {
-    const response = await fetch(this.pokeUrl);
-    return response.json();
+  getAll() {
+    fetch(this.pokeUrl)
+      .then((response) => response.json())
+      .then((pokeList) => pokeList);
   }
 
-  // TEMP async get(id: Pokemon['id']) {
-  //   const response = await fetch(this.url + id);
-  //   return response.json();
-  // }
+  getEach() {
+    fetch(this.pokeUrl)
+      .then((response) => response.json())
+      .then((pokeList) => {
+        console.log(pokeList);
+        pokeList.results.forEach((pokemon) => {
+          const eachUrl = pokemon.url;
+          console.log(eachUrl);
+          fetch(eachUrl)
+            .then((response) => response.json())
+            .then((pokeInfo) => {
+              console.log(pokeInfo);
+            });
+        });
+      });
+  }
 
-  // async create(pokemon: Partial<Pokemon>) {
-  //   const response = await fetch(this.url, {
-  //     method: 'POST',
-  //     body: JSON.stringify(pokemon),
-  //     headers: { 'Content-Type': 'application/json' },
-  //   });
-  //   return response.json();
-  // }
-
-  // async update(id: Pokemon['id'], pokemon: Partial<Pokemon>) {
-  //   const response = await fetch(this.url + id, {
-  //     method: 'PATCH',
-  //     body: JSON.stringify(pokemon),
-  //     headers: { 'Content-Type': 'application/json' },
-  //   });
-  //   return response.json();
-  // }
-
-  // async delete(id: Pokemon['id']) {
-  //   const response = await fetch(this.url + id, {
-  //     method: 'DELETE',
-  //   });
-  //   return response.ok;
-  // }
+  // FetchPokemonData(pokemon) {
+  //   const url = pokemon; // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
+  //   fetch(url)
+  //     .then((response) => response.json())
+  //     .then((pokeData) => {
+  //       console.log(pokeData);
+  //     });
 }
+
+// Async getAll() {
+//   const response = await fetch(this.pokeUrl);
+//   console.log(response);
+//   return response.json();
+// }
+
+// async get(id: Pokemon['id']) {
+//   const response = await fetch(this.pokeUrl + id);
+//   return response.json();
+// }
+
+// Async create(pokemon: Partial<Pokemon>) {
+//   const response = await fetch(this.url, {
+//     method: 'POST',
+//     body: JSON.stringify(pokemon),
+//     headers: { 'Content-Type': 'application/json' },
+//   });
+//   return response.json();
+// }
+
+// async update(id: Pokemon['id'], pokemon: Partial<Pokemon>) {
+//   const response = await fetch(this.url + id, {
+//     method: 'PATCH',
+//     body: JSON.stringify(pokemon),
+//     headers: { 'Content-Type': 'application/json' },
+//   });
+//   return response.json();
+// }
+
+// async delete(id: Pokemon['id']) {
+//   const response = await fetch(this.url + id, {
+//     method: 'DELETE',
+//   });
+//   return response.ok;
+// }
