@@ -26,7 +26,10 @@ export class Card extends Component {
       .map(
         (item) => `
           <li>
-            <p>${item.name.toUpperCase()}</p>
+            <p class="name">${item.name.toUpperCase()}</p>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${
+              item.url.split('/')[6]
+            }.gif" alt="${item.name}-picture" width=110 height=100>
             <p><a href="${item.url}">Details</a></p>
           </li>`
       )

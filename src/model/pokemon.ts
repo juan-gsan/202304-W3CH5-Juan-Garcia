@@ -1,5 +1,5 @@
 export type Pokemon = {
   name: string;
-  // Picture: string;
+  picture: string;
   url: string;
 };
