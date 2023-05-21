@@ -1,11 +1,9 @@
 export class ApiPokemon {
-  // Picture: string;
   pokeUrl: string;
   serverUrl: string;
   constructor() {
-    this.pokeUrl = 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0';
+    this.pokeUrl = `https://pokeapi.co/api/v2/pokemon?limit=151&offset=0`;
     this.serverUrl = 'http://localhost:3000/pokemon';
-    // This.picture = '';
   }
 
   async getAll() {

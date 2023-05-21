@@ -1,9 +1,9 @@
 import { ApiPokemon } from '../data/api.pokemon';
-import { Pokemon, PokemonData } from '../model/pokemon';
+import { PokemonData } from '../model/pokemon';
 import { Component } from './component';
 
 export class Details extends Component {
-  pokemon!: Pokemon[];
+  pokemon!: PokemonData[];
   repository: ApiPokemon;
   constructor(selector: string) {
     super(selector);
@@ -12,7 +12,9 @@ export class Details extends Component {
     this.handleLoadEach();
   }
 
-  async handleLoadEach() {}
+  async handleLoadEach() {
+    this.pokemon = await this.repository.getEach();
+  }
 
   async createTemplate() {
     const list = this.pokemon
