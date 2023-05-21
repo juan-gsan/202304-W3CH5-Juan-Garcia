@@ -9,5 +9,5 @@ export interface PokemonData {
   name: string;
   species: { name: string; url: string };
   sprites: { front_default: string };
-  types: [{ type: string; url: string }, { type: string; url: string }];
+  types: [{ type: { name: string }; url: string }];
 }

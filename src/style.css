@@ -33,7 +33,7 @@ li {
   border: 1px solid rgba(211, 211, 211, 0.4);
   border-radius: 10px;
   margin: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 li p {
@@ -51,8 +51,31 @@ li a {
   text-decoration: none;
 }
 
-li img {
-  margin: 1rem 0;
+.type {
+  margin: 0;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.buttons button {
+  background-color: rgba(211, 211, 211, 0.4);
+  border-radius: 5px;
+  margin: 1rem;
+  font-size: 1.5rem;
+  border: 1px solid rgba(211, 211, 211, 0.4);
+  box-shadow: 6px 6px 6px 4px rgba(0, 0, 0, 0.3);
+  color: rgba(34, 34, 34, 0.873);
+}
+
+.buttons button:hover {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+button i {
+  padding: 0.5rem 1rem;
 }
 
 footer {

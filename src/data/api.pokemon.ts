@@ -1,11 +1,9 @@
 export class ApiPokemon {
-  // Picture: string;
   pokeUrl: string;
   serverUrl: string;
   constructor() {
-    this.pokeUrl = 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0';
+    this.pokeUrl = `https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`;
     this.serverUrl = 'http://localhost:3000/pokemon';
-    // This.picture = '';
   }
 
   async getAll() {
@@ -15,17 +13,22 @@ export class ApiPokemon {
   }
 
   async getEach() {
+    const pokeContainer = [];
     const response = await fetch(this.pokeUrl);
     const pokeList = await response.json();
     const pokeDataContainer = await Promise.all(
-      pokeList.results.map(async (pokemon) => {
+      pokeList.results.map(async (pokemon: { url: string }) => {
         const eachUrl = pokemon.url;
         const response = await fetch(eachUrl);
         const pokeData = await response.json();
         return pokeData;
       })
     );
-    return pokeDataContainer;
+    for (let offset = 0; offset < pokeDataContainer.length; offset + 20) {
+      pokeContainer.push(pokeDataContainer.splice(offset, 20));
+    }
+
+    return pokeContainer;
   }
 }
 // Async get(id: Pokemon['id']) {
