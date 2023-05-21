@@ -1,5 +1,3 @@
-import { Pokemon } from '../model/pokemon';
-
 export class ApiPokemon {
   // Picture: string;
   pokeUrl: string;
@@ -19,32 +17,18 @@ export class ApiPokemon {
   async getEach() {
     const response = await fetch(this.pokeUrl);
     const pokeList = await response.json();
-    const pokeDataContainer = [];
-    pokeList.results.forEach(async (pokemon) => {
-      const eachUrl = pokemon.url;
-      const response = await fetch(eachUrl);
-      const pokeData = await response.json();
-      return pokeDataContainer.push(pokeData);
-    });
+    const pokeDataContainer = await Promise.all(
+      pokeList.results.map(async (pokemon) => {
+        const eachUrl = pokemon.url;
+        const response = await fetch(eachUrl);
+        const pokeData = await response.json();
+        return pokeData;
+      })
+    );
     return pokeDataContainer;
   }
-
-  // FetchPokemonData(pokemon) {
-  //   const url = pokemon; // <--- this is saving the pokemon url to a      variable to us in a fetch.(Ex: https://pokeapi.co/api/v2/pokemon/1/)
-  //   fetch(url)
-  //     .then((response) => response.json())
-  //     .then((pokeData) => {
-  //       console.log(pokeData);
-  //     });
 }
-
-// Async getAll() {
-//   const response = await fetch(this.pokeUrl);
-//   console.log(response);
-//   return response.json();
-// }
-
-// async get(id: Pokemon['id']) {
+// Async get(id: Pokemon['id']) {
 //   const response = await fetch(this.pokeUrl + id);
 //   return response.json();
 // }
