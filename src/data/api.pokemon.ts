@@ -17,7 +17,7 @@ export class ApiPokemon {
     const response = await fetch(this.pokeUrl);
     const pokeList = await response.json();
     const pokeDataContainer = await Promise.all(
-      pokeList.results.map(async (pokemon) => {
+      pokeList.results.map(async (pokemon: { url: string }) => {
         const eachUrl = pokemon.url;
         const response = await fetch(eachUrl);
         const pokeData = await response.json();

@@ -1,14 +1,21 @@
+/* eslint-disable no-new */
 import { Component } from './component';
 import { PokemonData } from '../model/pokemon';
 import { ApiPokemon } from '../data/api.pokemon';
+import { Navigation } from './navigation';
 
 export class Card extends Component {
-  pokemon!: PokemonData[];
+  pokemon!: PokemonData[][];
   repository: ApiPokemon;
+
+  offset!: number;
   constructor(selector: string) {
     super(selector);
     this.pokemon = [];
     this.repository = new ApiPokemon();
+    this.offset = 0;
+    new Navigation('main');
+    this.handleEventListeners();
     this.handleLoadEach();
   }
 
@@ -16,7 +23,10 @@ export class Card extends Component {
     super.cleanHtml();
     this.template = this.createTemplate();
     super.render();
-    this.element
+  }
+
+  handleEventListeners() {
+    document
       .querySelectorAll('button')
       .forEach((item) =>
         item.addEventListener('click', this.handleTurnPage.bind(this))
@@ -28,41 +38,45 @@ export class Card extends Component {
     this.render();
   }
 
-  async handleTurnPage(event) {
-    const element = event.target as HTMLButtonElement;
-    const id = element.dataset.id as string;
-    console.log(element);
+  async handleTurnPage(event: Event) {
+    const element = (await event.target) as HTMLElement;
+    const id = (await element.dataset.id) as string;
+
+    if (id === 'next') {
+      if (this.offset >= 1281) return;
+      this.offset += 1;
+      this.handleLoadEach();
+    }
+
+    if (id === 'previous') {
+      if (this.offset <= 0) return;
+      this.offset -= 1;
+      this.handleLoadEach();
+    }
   }
 
   createTemplate() {
-    console.log(this.pokemon);
-    const pokeList = this.pokemon
-      .forEach((pokemonPage) =>
-        pokemonPage.map(
-          (pokemon) => `
+    const pokeList = this.pokemon.map((pokemonPage) =>
+      pokemonPage.map(
+        (pokemon) => `
           <li>
             <p class="id">#${pokemon.id}</p>
             <p class="name">${pokemon.name.toUpperCase()}</p>
             <a class="details" href="${pokemon.species.url}"><img src="${
-            pokemon.sprites.front_default
-          }" alt="${pokemon.name}-picture" width=150 height=150></a>
+          pokemon.sprites.front_default
+        }" alt="${pokemon.name}-picture" width=150 height=150></a>
             <div class="types">
               <span class="type"><img src="./img/${
                 pokemon.types[0].type.name
               }.png" alt="${
-            pokemon.types[0].type.name
-          }-picture" width=64 height=32></span>
+          pokemon.types[0].type.name
+        }-picture" width=64 height=32></span>
             </div>
           </li>`
-        )
       )
-      .join('');
+    );
     return `
-      <ul>${pokeList}</ul>
-      <div class="buttons">
-        <button class="left"><i class="fa-solid fa-arrow-left"></i></button>
-        <button class="right"><i class="fa-solid fa-arrow-right"></i></button>
-      </div>
+      <ul>${pokeList[this.offset].join('')}</ul>
       `;
   }
 }
