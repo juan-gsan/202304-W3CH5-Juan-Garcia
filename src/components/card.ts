@@ -39,6 +39,10 @@ export class Card extends Component {
       .join('');
     return `
       <ul>${pokeList}</ul>
+      <div class="buttons">
+        <button class="left"><i class="fa-solid fa-arrow-left"></i></button>
+        <button class="right"><i class="fa-solid fa-arrow-right"></i></button>
+      </div>
       `;
   }
 }
