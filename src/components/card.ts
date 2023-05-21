@@ -1,39 +1,44 @@
 import { Component } from './component';
-import { Pokemon } from '../model/pokemon';
+import { PokemonData } from '../model/pokemon';
 import { ApiPokemon } from '../data/api.pokemon';
 
 export class Card extends Component {
-  pokemon!: Pokemon[];
+  pokemon!: PokemonData[];
   repository: ApiPokemon;
   constructor(selector: string) {
     super(selector);
     this.pokemon = [];
-    console.log(this.pokemon);
     this.repository = new ApiPokemon();
-    this.handleLoad();
+    this.handleLoadEach();
   }
 
-  async handleLoad() {
-    this.pokemon = await this.repository.getAll();
-    console.log(this.pokemon);
-    console.log(this.pokemon.results);
+  render() {
+    super.cleanHtml();
     this.template = this.createTemplate();
+    super.render();
+  }
+
+  async handleLoadEach() {
+    this.pokemon = await this.repository.getEach();
     this.render();
   }
 
   createTemplate() {
-    const list = this.pokemon.results
+    console.log(this.pokemon);
+    const pokeList = this.pokemon
       .map(
-        (item) => `
+        (pokemon) => `
           <li>
-            <p>${item.name.toUpperCase()}</p>
-            <p><a href="${item.url}">Details</a></p>
+            <p class="id">#${pokemon.id}</p>
+            <p class="name">${pokemon.name.toUpperCase()}</p>
+            <a href="${pokemon.species.url}"><img src="${
+          pokemon.sprites.front_default
+        }" alt="${pokemon.name}-picture" width=150 height=150></a>
           </li>`
       )
       .join('');
-
     return `
-      <ul>${list}</ul>
+      <ul>${pokeList}</ul>
       `;
   }
 }
