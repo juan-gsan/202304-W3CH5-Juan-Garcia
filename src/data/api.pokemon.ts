@@ -2,7 +2,7 @@ export class ApiPokemon {
   pokeUrl: string;
   serverUrl: string;
   constructor() {
-    this.pokeUrl = `https://pokeapi.co/api/v2/pokemon?limit=151&offset=0`;
+    this.pokeUrl = `https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`;
     this.serverUrl = 'http://localhost:3000/pokemon';
   }
 
@@ -13,6 +13,7 @@ export class ApiPokemon {
   }
 
   async getEach() {
+    const pokeContainer = [];
     const response = await fetch(this.pokeUrl);
     const pokeList = await response.json();
     const pokeDataContainer = await Promise.all(
@@ -23,7 +24,11 @@ export class ApiPokemon {
         return pokeData;
       })
     );
-    return pokeDataContainer;
+    for (let offset = 0; offset < pokeDataContainer.length; offset + 20) {
+      pokeContainer.push(pokeDataContainer.splice(offset, 20));
+    }
+
+    return pokeContainer;
   }
 }
 // Async get(id: Pokemon['id']) {

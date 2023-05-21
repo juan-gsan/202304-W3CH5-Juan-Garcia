@@ -37,22 +37,24 @@ export class Card extends Component {
   createTemplate() {
     console.log(this.pokemon);
     const pokeList = this.pokemon
-      .map(
-        (pokemon) => `
+      .forEach((pokemonPage) =>
+        pokemonPage.map(
+          (pokemon) => `
           <li>
             <p class="id">#${pokemon.id}</p>
             <p class="name">${pokemon.name.toUpperCase()}</p>
             <a class="details" href="${pokemon.species.url}"><img src="${
-          pokemon.sprites.front_default
-        }" alt="${pokemon.name}-picture" width=150 height=150></a>
+            pokemon.sprites.front_default
+          }" alt="${pokemon.name}-picture" width=150 height=150></a>
             <div class="types">
               <span class="type"><img src="./img/${
                 pokemon.types[0].type.name
               }.png" alt="${
-          pokemon.types[0].type.name
-        }-picture" width=64 height=32></span>
+            pokemon.types[0].type.name
+          }-picture" width=64 height=32></span>
             </div>
           </li>`
+        )
       )
       .join('');
     return `
